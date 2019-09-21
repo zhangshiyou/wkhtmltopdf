@@ -1,0 +1,144 @@
+/* 打印 */
+h1,ul,li{
+    font-weight:normal;
+    list-style: none;
+    padding:0;
+    margin:0
+}
+@media print{
+    .print-btn-area{
+        display: none
+    }
+    .print{
+        min-height:100%
+    }
+}
+.notice p{
+    margin:2px 0
+}
+.notice{
+    white-space: normal
+}
+.config-info{
+    margin-top:25px;
+}
+.padding-l-10{
+    padding-left:10px
+}
+.padding-r-10{
+    padding-right:10px
+}
+.mrgin-t-b{
+    margin:15px 0
+}
+.border-left{
+    border-left:1px solid #ddd;
+}
+.print-s{
+    font-size:20px;
+    padding-left:145px;
+    box-sizing: border-box
+}
+.print-s .label{
+    display: inline-block;
+}
+.dis-none{
+    visibility: hidden;
+}
+.print-s li{
+    padding:3px 0
+}
+.text-c{
+    text-align: center;
+    font-weight: bold
+}
+.print{
+    text-align: left;
+    width:100%;
+    padding:0 50px;
+    box-sizing:border-box;
+    margin:0 auto;
+    /* padding:30px; */
+    box-sizing: border-box;
+    font:14px/1.5 "Microsoft YaHei",tahoma,arial,\5b8b\4f53; color:#303645; outline:0;
+}
+.font-0{
+    font-size:0
+}
+.border{
+    border:1px solid #ddd;
+    padding:0 10px;
+    box-sizing: border-box;
+    white-space: nowrap
+}
+.print-content{
+    /* page-break-before:left */
+    page-break-before:always;
+    min-height:27cm;
+    page-break-after:always
+}
+.top-tit{
+    padding:35px 0;
+    font-size:24px;
+}
+.tit{
+    font-size:18px;
+    padding:20px 0;
+}
+.width-50{
+    width:50%;
+    box-sizing: border-box;
+    display: inline-block;
+    font-size:18px;
+}
+.f-fl{
+    /* display: inline-block;
+    box-sizing: border-box */
+    float: left
+}
+.f-fixed:after{content:'\200b';display:block;height:0;clear:both;}
+.f-fixed{*zoom:1;}
+.padding-bo{
+    padding-bottom:10px;
+}
+.info-table{
+    border-collapse:collapse;
+    width:100%;
+}
+.info-table td{
+    padding:5px;
+    border:1px solid #ddd;
+}
+.pos{
+    position: relative;
+}
+.btm{
+    position:absolute;
+    top:80px;
+    left:0px;
+    width:140px;
+    height:165px;
+    border:1px dotted #ddd;
+    text-align: center;
+    padding-top: 47px;
+    box-sizing: border-box;
+    font-size: 22px;
+}
+.space{
+    letter-spacing: 2px;
+}
+.space-b{
+    letter-spacing: 6px;
+}
+.print-btn{
+    background: #66b1ff;
+    color:#fff;
+    width:70px;
+    margin:0 auto;
+}
+/* 打印 */
+
+
+
+
+

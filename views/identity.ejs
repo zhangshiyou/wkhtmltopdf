@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div>
+        <div class='print' v-loading='loading'>
+            <div v-if='true'>
+                <div>
+                    <div>
+                        <div>
+                            <% list.forEach(function(item){%>
+                                <div class='print-content'>
+                                    <div class='text-c top-tit'>
+                                        <%=item.provinceName %><%=item.examTime.split(' ')[0].split('-')[0] %><%=item.examName %>
+                                    </div>
+                                    <div class='border font-0 f-fixed'>
+                                        <!-- 准考证 -->
+                                        <div class='width-50 f-fl padding-r-10  pos'>
+                                            <div class='btm'>
+                                                照
+                                                    <br>
+                                                片
+                                            </div>
+                                            <h1 class='tit text-c space-b'>准考证</h1>
+                                            <ul class='print-s'>
+                                                <li>
+                                                    <span class='label'>姓<i class='dis-none'>姓名</i>名：</span>
+                                                    <%=item.studentName %>
+                                                </li>
+                                                <li>
+                                                    <span class='label'>准考证号：</span>
+                                                    <%=item.ticketNo %>
+                                                </li>
+                                                <li>
+                                                    <span class='label'>考<i class='dis-none'>考区</i>区：</span>
+                                                    <%=item.areaName %>
+                                                </li>
+                                                <li>
+                                                    <span class='label'>考<i class='dis-none'>考场</i>场：</span>
+                                                    <%=item.roomName %>
+                                                </li>
+                                                <li>
+                                                    <span class='label'>座<i class='dis-none'>座号</i>号：</span>
+                                                    <%=item.seatNo %>
+                                                </li>
+                                            </ul>
+                                            <h1 class='tit text-c mrgin-t-b space'>考试时间</h1>
+                                            <div>
+                                                <table class='info-table'>
+                                                    <tr>
+                                                        <td width='35%' rowspan="3">
+                                                            <%=item.examTime %>
+                                                        </td>
+                                                        <td width='35%'>8:30-9:00</td>
+                                                        <td width='30%'>速写</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>9:10-12:10</td>
+                                                        <td>造型基础</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>14:00-17:00</td>
+                                                        <td>色彩基础</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class='config-info notice f-fixed'>
+                                                <div class='f-fl'>
+                                                    <p>
+                                                        <img style='max-width:94px' src="http://static.easywish.cn/ew/1909/19/143b365078cb42899a8a5dec9d584f54.png?x-oss-process=image/resize,w_150" alt="">
+                                                    </p>
+                                                </div>
+                                                <div class='f-fl' style='padding-top:18px;'>
+                                                    <p style='font-size:22px;text-align:center;'>
+                                                        山东联考新方向
+                                                    </p>
+                                                    <p>
+                                                        联系电话：15288865692
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 考生须知 -->
+                                        <div class='width-50 f-fl border-left padding-l-10'>
+                                            <h1 class='tit text-c space'>考生须知</h1>
+                                            <div class='notice padding-bo'>
+                                                <p>
+                                                    1、考生参加考试时必须携带身份证、准考证、等已备核对。否则不准参加考试。
+                                                </p>
+                                                <p>
+                                                    2、考生必须提前进入考场，进入考场后必须服从主考、监考老师调动，按指定位置就座，并将证件准备好以备检查。
+                                                </p>
+                                                <p>
+                                                    3、带入考场的非考试用品必须集中放在监考老师指定位置，不得以任何形式将书籍、记载课程内容的纸张及考试有关的电子媒体信息随身携带或带入座位。
+                                                </p>
+                                                <p>
+                                                    4、考生考试期间不得在考场内喧哗，不得干扰主、监考教师，不得离开考场，如有特殊情况应向主、监考老师说明，由主考、监考老师决定。
+                                                </p>
+                                                <p>
+                                                    5、开考后考生不准来回走动、不准玩手机、拍照。
+                                                </p>
+                                                <p>
+                                                    6、考生不准损坏试卷和试题违者按作弊处理。
+                                                </p>
+                                                <p>
+                                                    7、考试期间不准提前交卷，考试结束统一离场。
+                                                </p>
+                                                <p>
+                                                8、考试期间不准抄小抄和交换试卷。
+                                                </p>
+                                                <p>
+                                                9、考试结束前再次核实完善个人信息，考生填写个人信息文字用正楷，数字及字母代码要清晰易辨。
+                                                </p>
+                                                <p>
+                                                10、考试结束考生务必将自己脚下卫生清理干净再离场。
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

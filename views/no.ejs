@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- <script src='js/JsBarcode.all.min.js'></script> -->
+    <style>
+        h1,ul,li{
+            font-weight:normal;
+            list-style: none;
+            padding:0;
+            margin:0
+        }
+        .lf{float:left;}
+        .f-fixed:after{content:'\200b';display:block;height:0;clear:both;}
+        .f-fixed{*zoom:1;}
+        .print{
+            text-align: left;
+            width:700px;
+            margin:0 auto;
+            box-sizing: border-box;
+            font:14px/1.5 "Microsoft YaHei",tahoma,arial,\5b8b\4f53; color:#303645; outline:0;
+        }
+        @media print{
+            .print-btn-area{
+                display: none
+            }
+            .print{
+                min-height:100%
+            }
+            .no-data{
+                display: none;
+            }
+            .items{
+                page-break-before:always;
+                page-break-after:always
+            }
+        }
+        .items{
+            width:24%;
+            display:inline-block;
+            box-sizing: border-box;
+            margin:2px 0 0 1px;
+            padding-bottom: 1px;
+        }
+        .lines{
+            border:1px solid #298EE9;
+            padding-bottom: 2px;
+        }
+        .height-100{
+            height:26px;
+        }
+        .border-b{
+            border-bottom:1px solid #298EE9
+        }
+        .barcode{
+            width:100%;
+        }
+        .width-50{
+            width:50%
+        }
+        .text.l{
+            text-align: left
+        }
+        .text-r{
+            text-align: right
+        }
+        .text-c{
+            text-align: center
+        }
+        .width-30{
+            width:33.33%
+        }
+        .amrgin-top-10{
+            margin-top:5px;
+        }
+        .font-14{
+            font-size:12px
+        }
+        .pad{
+            padding:0 3px;
+            box-sizing: border-box
+        }
+        .width-4{
+            width:38%;
+        }
+        .width-3{
+            width:36%;
+        }
+        .width-2{
+            width:26%;
+        }
+        .width-40{
+            width:40%;
+        }
+        .width-60{
+            width:60%;
+        }
+        .asd svg{
+            width:100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div>
+        <% list.forEach(function(item){%>
+            <div class='print-content' v-for='(item,index) in seatList'>
+                <h1 class='text-c top-tit'>
+                    <!-- {{item.roomName}} -->
+                    <%=item.roomName %>
+                </h1>
+                <div class='f-fixed'>
+                    <% item.ticketList.forEach(function(subItem,subIndex){%>
+                        <div class='items'>
+                            <div class='lines'>
+                                <div class='border-b height-100'>
+
+                                </div>
+                                <div class='height-100'>
+
+                                </div>
+                            </div>
+                            <div class='lines amrgin-top-10'>
+                                <div>
+                                    <div class='asd'>
+                                        <%-subItem.svgNode %>
+                                    </div>
+                                    <!-- <svg
+                                        class="barcode"
+                                        jsbarcode-format="CODE128"
+                                        jsbarcode-value= <%=subItem.ticketNo %></svg>
+                                        jsbarcode-textmargin="0"
+                                        jsbarcode-height='55'
+                                        jsbarcode-fontoptions="normal">
+                                    </svg> -->
+                                    <!-- <%=subIndex %> -->
+                                </div>
+                                <div class='font-14 pad'>
+                                    <div class='f-fixed'>
+                                        <div class='lf width-4 text-l'>
+                                            <%=subItem.studentName %>
+                                        </div>
+                                        <div class='width-3 lf'>
+                                            <%=item.roomName %>
+                                        </div>
+                                        <div class='width-2 lf text-r'>
+                                            座位:<%=subItem.seatNo %>
+                                        </div>
+                                    </div>
+                                    <div class='f-fixed'>
+                                        <div class='lf width-60 text-l'>
+                                            <%=subItem.areaName %>
+                                        </div>
+                                        <div class='lf width-40 text-r'>
+                                            代码:<%=subItem.agentCode %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+  </body>
+</html>
