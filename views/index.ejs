@@ -1,14 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/reset.css' />
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <div>
-        <a href="./pdf/准考证号.pdf">下载准考证号</a>
-        <a href="./pdf/座位号.pdf">下载座位号</a>
-    </div>
-  </body>
+<head>
+<title><%= title %></title>
+<link rel='stylesheet' href='/stylesheets/reset.css' />
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<style>
+    .asd{
+        position:relative;
+        width:100px;
+        height:50px;
+        background: #2288ff;
+        color:#fff;
+        line-height: 50px;
+        text-align: center
+    }
+    .ipt{
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        outline: none;
+        background-color: transparent;
+        filter:alpha(opacity=0);
+        -moz-opacity:0;
+        -khtml-opacity: 0;
+        opacity: 0;
+        width:100%;
+    }
+</style>
+</head>
+<body>
+<div>
+    <form action="/jsList" method="post" enctype="multipart/form-data" onsubmit = "return false">
+        <div class='asd'>
+
+            <input type="file" class='ipt' name='list'>读取江苏文件
+        </div>
+        <!-- <button typs='submit'>提交</button> -->
+    </form>
+    <a href="./pdf/准考证号.pdf">下载准考证号</a>
+    <a href="./pdf/座位号.pdf">下载座位号</a>
+    <a href="./pdf/江苏.pdf">下载江苏座位号</a>
+    <br>
+    <!-- <button class='btn'>江苏读取文件</button> -->
+</div>
+</body>
+<script>
+    $('.btn').click(function(){
+        // var formData = new FormData()
+        // formData.append('file', this.file)
+        $.ajax({
+            // url=''
+        })
+    })
+    $('.ipt').change(function(file){
+        const files = file.currentTarget.files[0]
+        var formData = new FormData()
+        formData.append('file', files)
+        $.ajax({
+            url:'http://localhost:3100/jsList',
+            type:'post',
+            data:formData,
+            processData:false,
+            contentType: false,  
+            success:function(){
+                debugger
+            }
+        })
+        debugger
+    })
+</script>
 </html>

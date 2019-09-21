@@ -24,10 +24,13 @@
     "koa-views": "^6.2.0",
     "qrcode": "^1.4.2",
     "wkhtmltopdf": "^0.3.4",
+    "xlsx": "^0.15.1",
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "eslint": "^6.4.0",
+    "formidable": "^1.2.1",
+    "node-xlsx": "^0.15.0",
     "nodemon": "^1.19.1"
   }
 }

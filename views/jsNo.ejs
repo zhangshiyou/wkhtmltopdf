@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/reset.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- <script src='js/JsBarcode.all.min.js'></script> -->
+    <style>
+        .print-content{
+            overflow: hidden;
+            width:800px;
+            margin: 0 auto
+        }
+        h1,ul,li{
+            font-weight:normal;
+            list-style: none;
+            padding:0;
+            margin:0
+        }
+        .lf{float:left;}
+        .f-fixed:after{content:'\200b';display:block;height:0;clear:both;}
+        .f-fixed{*zoom:1;}
+        .print{
+            text-align: left;
+            width:700px;
+            margin:0 auto;
+            box-sizing: border-box;
+            font:14px/1.5 "Microsoft YaHei",tahoma,arial,\5b8b\4f53; color:#303645; outline:0;
+        }
+        @media print{
+            .print-btn-area{
+                display: none
+            }
+            .print{
+                min-height:100%
+            }
+            .no-data{
+                display: none;
+            }
+            .items{
+                page-break-before:always;
+                page-break-after:always
+            }
+        }
+        .items{
+            width:24%;
+            display:inline-block;
+            box-sizing: border-box;
+            margin:2px 0 0 1px;
+            padding-bottom: 1px;
+        }
+        .lines{
+            border:1px solid #298EE9;
+            padding-bottom: 2px;
+        }
+        .height-100{
+            height:26px;
+        }
+        .border-b{
+            border-bottom:1px solid #298EE9
+        }
+        .barcode{
+            width:100%;
+        }
+        .width-50{
+            width:50%
+        }
+        .text.l{
+            text-align: left
+        }
+        .text-r{
+            text-align: right
+        }
+        .text-c{
+            text-align: center
+        }
+        .width-30{
+            width:33.33%
+        }
+        .amrgin-top-10{
+            margin-top:5px;
+        }
+        .font-14{
+            font-size:12px
+        }
+        .pad{
+            padding:0 3px;
+            box-sizing: border-box
+        }
+        .width-4{
+            width:38%;
+        }
+        .width-3{
+            width:36%;
+        }
+        .width-2{
+            width:26%;
+        }
+        .width-40{
+            width:40%;
+        }
+        .width-60{
+            width:60%;
+        }
+        .asd svg{
+            width:100%;
+        }
+
+        .pos{
+            position: relative;
+        }
+        .cornor{
+            border:40px solid transparent;
+            -webkit-transform:rotate(135deg) translate(-158px, -43px);
+            transform:rotate(135deg) translate(-158px, -43px);
+        }
+        .cornor-1{
+            border-right-color:#ED1C24;
+        }
+        .cornor-2{
+            border-right-color:#FFF200;
+        }
+        .cornor-3{
+            border-right-color:#3F48CC;
+        }
+        .cornor-4{
+            border-right-color:#22B14C;
+        }
+        .asd{
+            margin-top:-39px
+        }
+    </style>
+  </head>
+    <body>
+        <div class='print-content'>
+            <div class='f-fixed' style='text-align: center'>
+                <% list.forEach(function(item){%>
+                    <div class='items'>
+                        <div class='lines'>
+                            <div class='border-b height-100'>
+
+                            </div>
+                            <div class='height-100'>
+
+                            </div>
+                        </div>
+                        <div class='lines amrgin-top-10' style='overflow: hidden;'>
+                            <% if(item.color===1){ %>
+                                <div class='cornor cornor-1'></div>
+                            <% }else if(item.color===2){ %>
+                                <div class='cornor cornor-2'></div>
+                            <% }else if(item.color===3){ %>
+                                <div class='cornor cornor-3'></div>
+                            <% }else{ %>
+                                <div class='cornor cornor-4'></div>
+                            <% }%>
+                            <div class='asd'>
+                                <div class=''>
+                                    <%-item.svgNode %>
+                                </div>
+                            </div>
+                            <div style='text-align:center;font-size:16px;padding:10px 0;font-weight:900'>百校联考</div>
+                            <div class='font-14 pad'>
+                                <div class='' style='font-weight:900;padding-left:5px;padding-bottom:10px'>
+                                    <div class='text-l' style='padding-bottom:5px'>
+                                        姓名：<%=item.stuName %>
+                                    </div>
+                                    <div class=''>
+                                        参考学校/画室：<%=item.schoolName %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </body>
+</html>
