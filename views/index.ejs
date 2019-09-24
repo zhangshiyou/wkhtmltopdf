@@ -33,16 +33,21 @@
 </head>
 <body>
 <div>
-    <form action="/jsList" method="post" enctype="multipart/form-data" onsubmit = "return false">
-        <div class='asd'>
-
-            <input type="file" class='ipt' name='list'>读取江苏文件
+    <div style='width:800px;margin:0 auto'>
+        <form action="/jsList" method="post" enctype="multipart/form-data" onsubmit = "return false">
+            <div class='asd'>
+    
+                <input type="file" class='ipt' name='list'>读取江苏文件
+            </div>
+            <!-- <button typs='submit'>提交</button> -->
+        </form>
+        <div>
+            <textarea style='width:100%' name="" id="result" cols="30" rows="10"></textarea>
         </div>
-        <!-- <button typs='submit'>提交</button> -->
-    </form>
-    <a href="./pdf/准考证号.pdf">下载准考证号</a>
-    <a href="./pdf/座位号.pdf">下载座位号</a>
-    <a href="./pdf/江苏.pdf">下载江苏座位号</a>
+        <a href="./pdf/准考证号.pdf">下载准考证号</a>
+        <a href="./pdf/座位号.pdf">下载座位号</a>
+        <a href="./pdf/江苏.pdf">下载江苏座位号</a>
+    </div>
     <br>
     <!-- <button class='btn'>江苏读取文件</button> -->
 </div>
@@ -65,8 +70,8 @@
             data:formData,
             processData:false,
             contentType: false,  
-            success:function(){
-                
+            success:function(res){
+                $('#result').val(res)
             }
         })
     })
