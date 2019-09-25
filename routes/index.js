@@ -95,6 +95,7 @@ router.post('/jsList', async (ctx, next) => {
             resolve()
         })
     })
+    ctx.append('userName','111111');
     ctx.body = asd
 })
 router.get('/string', async (ctx, next) => {
