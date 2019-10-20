@@ -37,15 +37,18 @@
             }
         }
         .items{
-            width:24%;
+            width:93mm;
+            height:32mm;
             display:inline-block;
             box-sizing: border-box;
             margin:2px 0 0 1px;
             padding-bottom: 1px;
+            font-size:12px
         }
         .lines{
             border:1px solid #298EE9;
-            padding-bottom: 2px;
+            /* padding-bottom: 2px; */
+            box-sizing: border-box
         }
         .height-100{
             height:26px;
@@ -72,7 +75,7 @@
             width:33.33%
         }
         .amrgin-top-10{
-            margin-top:5px;
+            /* margin-top:5px; */
         }
         .font-14{
             font-size:12px
@@ -96,8 +99,33 @@
         .width-60{
             width:60%;
         }
+        .trans svg{
+            height:100%;
+        }
         .asd svg{
-            width:100%;
+            width:100%; 
+            height:100%;
+        }
+        .asd{
+            height:16mm
+        }
+        .font-big-blod{
+            font-size:17px;
+            font-weight:bold
+        }
+        .trans{
+            transform: rotate(90deg) translate(41px, 37px);
+            -webkit-transform:rotate(90deg) translate(41px, 37px)
+        }
+        .print-content{
+            width:190mm;
+            margin:0 auto;
+        }
+        .over-text{
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
   </head>
@@ -112,47 +140,42 @@
                 <div class='f-fixed'>
                     <% item.ticketList.forEach(function(subItem,subIndex){%>
                         <div class='items'>
-                            <div class='lines'>
-                                <div class='border-b height-100'>
-
-                                </div>
-                                <div class='height-100'>
-
-                                </div>
-                            </div>
-                            <div class='lines amrgin-top-10'>
-                                <div>
-                                    <div class='asd'>
-                                        <%-subItem.svgNode %>
+                            <div class='lines amrgin-top-10 f-fixed'>
+                                <div class='lf' style='width:47%;padding:10px 0 0px 5px;box-sizing: border-box'>
+                                    <div class='over-text'>
+                                        <span class='font-big-blod'><%-subItem.areaName %></span>
                                     </div>
-                                    <!-- <svg
-                                        class="barcode"
-                                        jsbarcode-format="CODE128"
-                                        jsbarcode-value= <%=subItem.ticketNo %></svg>
-                                        jsbarcode-textmargin="0"
-                                        jsbarcode-height='55'
-                                        jsbarcode-fontoptions="normal">
-                                    </svg> -->
-                                    <!-- <%=subIndex %> -->
-                                </div>
-                                <div class='font-14 pad'>
-                                    <div class='f-fixed'>
-                                        <div class='lf width-4 text-l'>
+                                    <div>
+                                        代码: <span class='font-big-blod'><%-subItem.agentCode %></span>    
+                                    </div>
+                                    <div>
+                                        姓名：<span>
                                             <%=subItem.studentName %>
-                                        </div>
-                                        <div class='width-3 lf'>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        考场：<span>
                                             <%=item.roomName %>
-                                        </div>
-                                        <div class='width-2 lf text-r'>
-                                            座位:<%=subItem.seatNo %>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        座位：<span>
+                                            <%=subItem.seatNo %>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class='lf f-fixed' style='width:53%'>
+                                    <div class='lf' style='width:20%;height:32mm'>
+                                        <div class='asd trans' style='width:32mm;height:38px'>
+                                            <%-subItem.noNo %>
                                         </div>
                                     </div>
-                                    <div class='f-fixed'>
-                                        <div class='lf width-60 text-l'>
-                                            <%=subItem.areaName %>
+                                    <div class='lf' style='width:80%'>
+                                        <div class='asd'>
+                                            <%-subItem.svgNode %>
                                         </div>
-                                        <div class='lf width-40 text-r'>
-                                            代码:<%=subItem.agentCode %>
+                                        <div class='asd'>
+                                            <%-subItem.svgNode %>
                                         </div>
                                     </div>
                                 </div>
