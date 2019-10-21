@@ -118,6 +118,18 @@ router.post('/jsList', async (ctx, next) => {
     form.uploadDir = path.join(__dirname,'../excel');  
     form.keepExtensions = true;//保留后缀  
     form.maxFieldsSize = 2*1024*1024;  
+    // var hasDir=fs.accessSync(path.join(__dirname,'../excel'));
+    var hasDir=true
+    try {
+        fs.accessSync(path.join(__dirname,'../excel'))
+        console.log('可以读写');
+    } catch (err) {
+        hasDir=false
+    }
+    console.log(hasDir)
+    if(!hasDir){
+        fs.mkdirSync(path.join(__dirname,'../excel'))
+    }
     let asd
     await new Promise(resolve =>{
         form.parse(ctx.req,function(err,fields,files){
