@@ -158,12 +158,14 @@ router.post('/jsList', async (ctx, next) => {
             var vals=[];
             for(var s=1,len=firstSheet.length;s<len;s++){
                 var cur=firstSheet[s]
-                vals.push({
-                    stuName:cur[0],
-                    schoolName:cur[1],
-                    ticketNo:cur[2],
-                    color:cur[3],
-                })
+                if(cur[0]){
+                    vals.push({
+                        stuName:cur[0],
+                        schoolName:cur[1],
+                        ticketNo:cur[2],
+                        color:cur[3],
+                    })
+                }
             }
             asd=JSON.stringify(vals)
             resolve()
