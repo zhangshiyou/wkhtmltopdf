@@ -1,8 +1,8 @@
-var list=[]
+// var list=[]
 // 从data开去取数据
-let d={"ticketNo":"0040040489","areaName":"菏泽考区","appId":29,"studentName":"哦们","examName":"美术类第一次教学检测","provinceName":"山东","examTime":"2019-09-01 00:00:00","seatNo":3,"idNo":"255111111111111111","roomName":"第21考场"}
-for(let s=0;s<1500;s++){
-    list.push(d)
-}
+let list=[{"studentName":"石永迪","appId":"371525200011251717","areaName":"济南考区","ticketNo":"A01a103302951","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":8,"idNo":"371525200011251717","roomName":"第160考场"},{"studentName":"兰俊仪","appId":"370112200208159629","areaName":"济南考区","ticketNo":"A01a103302952","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":25,"idNo":"370112200208159629","roomName":"第178考场"},{"studentName":"刘音琦","appId":"370181200107224121","areaName":"济南考区","ticketNo":"A01a103302949","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":12,"idNo":"370181200107224121","roomName":"第20考场"},{"studentName":"李瑞雪","appId":"372928200101257348","areaName":"济南考区","ticketNo":"A01a103302954","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":11,"idNo":"372928200101257348","roomName":"第40考场"},{"studentName":"王薇","appId":"371722200212165462","areaName":"济南考区","ticketNo":"A01a134502224","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":22,"idNo":"371722200212165462","roomName":"第53考场"},{"studentName":"祝梦昊","appId":"372925200103188519","areaName":"济南考区","ticketNo":"A01a100902277","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":8,"idNo":"372925200103188519","roomName":"第56考场"},{"studentName":"孙悦","appId":"371424200110053626","areaName":"济南考区","ticketNo":"A01a103302955","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":7,"idNo":"371424200110053626","roomName":"第5考场"},{"studentName":"李怡然","appId":"371202200204151527","areaName":"济南考区","ticketNo":"A01a103302953","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":1,"idNo":"371202200204151527","roomName":"第83考场"},{"studentName":"刘子昂","appId":"370902200112152415","areaName":"济南考区","ticketNo":"A01a103302950","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":5,"idNo":"370902200112152415","roomName":"第91考场"},{"studentName":"李依溦","appId":"371302200207221442","areaName":"临沂考区","ticketNo":"Q17q124801416","examName":"第二次山东省美术基础教学检测","provinceName":"山东","examTime":"2019-10-26 12:12:12","seatNo":30,"idNo":"371302200207221442","roomName":"第21考场"}]
+// for(let s=0;s<1500;s++){
+//     list.push(d)
+// }
 // list[0]=d
 module.exports =list

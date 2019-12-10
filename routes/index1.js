@@ -156,16 +156,66 @@ router.post('/jsList', async (ctx, next) => {
             // 只解析以第一sheet的数据
             var firstSheet=obj[0].data;
             var vals=[];
-            for(var s=1,len=firstSheet.length;s<len;s++){
-                var cur=firstSheet[s]
-                if(cur[0]){
-                    vals.push({
-                        stuName:cur[0],
-                        schoolName:cur[1],
-                        ticketNo:cur[2],
-                        color:cur[3],
-                    })
+            // =========
+            // 江苏桌贴
+            // for(var s=1,len=firstSheet.length;s<len;s++){
+            //     // 江苏报名
+            //     var cur=firstSheet[s]
+            //     if(cur[0]){
+            //         vals.push({
+            //             stuName:cur[0],
+            //             schoolName:cur[1],
+            //             ticketNo:cur[2],
+            //             color:cur[3],
+            //         })
+            //     }
+            // }
+            // ==========
+            // 山东准考证
+            // for(var s=1,len=firstSheet.length;s<len;s++){
+            //     var cur=firstSheet[s]
+            //     if(cur[0]){
+            //         vals.push({
+            //             studentName:cur[0],
+            //             appId:cur[1],
+            //             areaName:cur[4],
+            //             ticketNo:cur[3],
+            //             examName:cur[2],
+            //             provinceName:'山东',
+            //             examTime:'2019-10-26 12:12:12',
+            //             seatNo:cur[7],
+            //             idNo:cur[1],
+            //             roomName:`第${cur[6]}考场`,
+            //         })
+            //     }
+            // }
+            // =====
+            // 山东桌贴50个/考场
+            for(var ss=1;ss<189;ss++){
+                var ticketList=[]
+                var cur
+                var roomName
+                for(var s=1,len=firstSheet.length;s<len;s++){
+                    cur=firstSheet[s]
+                    if(cur[6]==ss){
+                        roomName= `第${cur[6]}考场`
+                        ticketList.push({
+                            "agentCode":cur[5],
+                            "agentName":cur[4],
+                            "areaName":cur[4],
+                            "idNo":cur[1],
+                            "seatNo":cur[7],
+                            "studentName":cur[0],
+                            "roomName":`第${cur[6]}考场`,
+                            "ticketNo":cur[3]
+                        })
+                    }
                 }
+                vals.push({
+                    arrangeId:cur[6],
+                    roomName:roomName,
+                    ticketList:ticketList,
+                })
             }
             asd=JSON.stringify(vals)
             resolve()
