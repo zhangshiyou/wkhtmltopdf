@@ -5,15 +5,36 @@
     <% include ./favicon %>
     <!-- <script src='js/JsBarcode.all.min.js'></script> -->
     <style>
-        
+        .wrap-del{
+            width:500px;
+            margin:0 auto;
+        }
     </style>
   </head>
 <body>
-    <div>
+    <div class='wrap-del'>
         <div>
-            <%= s %>
+            机构：<input type="text">
         </div>
-        <img src=<%= s %> alt="">
+        <div>
+            from：<input type="text">
+        </div>
+        <div>
+            <button id='qrcode'>
+                生成
+            </button>
+        </div>
     </div>
+    <script>
+        $('#qrcode').click(()=>{
+            $.ajax({
+                url:'qrcode',
+                method:'get',
+                success:(data)=>{
+                    console.log(data)
+                }
+            })
+        })
+    </script>
 </body>
 </html>

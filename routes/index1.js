@@ -50,66 +50,85 @@ router.get('/jsSeatNo', async (ctx, next) => {
     })
 })
 router.get('/code', async (ctx, next) => {
-    var s
-    var url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx93d20a0261dce3d2&secret=5d80313927a26524883fce37a6d04fc5'
-    // await request(url, function (error, response, body) {
-    //     if (!error && response.statusCode == 200) {
-    //         console.log(body) // Show the HTML for the baidu homepage.
-    //     }
-    // });
-    var url_1='https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode'
-    var token='26_W9GlXmbKRX3m_wVf6Rd-9epwmWM5VtO6HdLpeu_NS_qhpV00Nrmvm7y7QNbP7qJXmoDahRLPcgKLe1IC3RRavNDVMUjAgv3-xnZf253esvqYnCE__J6hxZ234jlY39N1yk8FjabCKmi8lYicHFXdAHAPNF'
-    console.log(ctx)
-    request({
-        url:`${url_1}?access_token=${token}&path=pages/index/main`,
-        method: "post",
-        headers: {
-            "content-type": "application/json",
-        },
-        body: JSON.stringify({
-            access_token:token,
-            path:"pages/index/main"
-        })
-    }, await function (error, response, body) {
-        // fs.readFile('./public/images/favicon.ico',function (err, origin_buffer) {
-        //     console.log(Buffer.isBuffer(origin_buffer))
-        //     fs.writeFile('logo_bugger.png',origin_buffer,function (err) {
-        //        if (err)
-        //            console.log(err);
-        //     })
-        //     //var base64Image = new Buffer(origin_buffer).toString('base64')
-        //     var base64Image = origin_buffer.toString('base64')
-        //     console.log(base64Image);
-         
-        //     var decodedImage = Buffer.from(base64Image,'base64');
-        //     console.log(Buffer.compare(origin_buffer,decodedImage))
-         
-        //     fs.writeFile('logo_decoded.png',decodedImage,function (err) {
-        //         if (err)
-        //             console.log(err);
-        //     })
-        // })
-        if (!error && response.statusCode == 200) {
-            var jsonS=Buffer.from(body)
-            var base64Img = body.toString('base64'); // base64图片编码字符串
-            // console.log(base64Img)
-            var dataBuffer = Buffer.from(base64Img);
-            console.log(dataBuffer)
-            s=dataBuffer.toString('base64')
-            // var dataBuffer=base64.b64encode(base64Img)
-            fs.writeFile('./public/images/1wsa23.png', dataBuffer, function(err,w,e,r,t) {
-                if(err) {
-                    console.log(err)
-                }else{
-                    console.log('保存成功')
+    await ctx.render('code', {
+        title: '生成二维码',
+    })
+})
+function getToken(){
+    return new Promise(resolve=>{
+        var grant_type='client_credential'
+        var appid='wx93d20a0261dce3d2'
+        var secret='5d80313927a26524883fce37a6d04fc5'
+        var url=`https://api.weixin.qq.com/cgi-bin/token?grant_type=${grant_type}&appid=${appid}&secret=${secret}`
+        request({
+            url:`${url}`,
+            method: "get",
+            headers: {
+                "content-type": "application/json",
+            },
+            // body: JSON.stringify({
+            //     grant_type:token,
+            //     path:"pages/index/main"
+            // })
+        }, async function (error, response, body) {
+            resolve(body)
+        });
+    })
+}
+function getQrcode(){
+    return new Promise(resolve=>{
+        getToken().then(re=>{
+            var tokenObj=JSON.parse(re)
+            var s
+            var url_1='https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode'
+            var url='https://api.weixin.qq.com/wxa/getwxacodeunlimit'
+            var token=tokenObj['access_token']
+            var scene=encodeURIComponent("from=prob")
+            var form={
+                // "access_token":token,
+                "page":"pages/index/main",
+                "scene":"from=prob"
+            }
+            console.log(JSON.stringify(form))
+            request({
+                url:`${url}?access_token=${token}`,
+                // url:`${url}?access_token=${token}&path=pages/index/main`,
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "page":"pages/index/main",
+                    "scene":'asd',
+                    "encoding":"binary"
+                })
+            }, async function (error, response, body) {
+                debugger
+                if (!error && response.statusCode == 200) {
+                    var jsonS=Buffer.from(body)
+                    var base64Img = body.toString('base64'); // base64图片编码字符串
+                    var dataBuffer = Buffer.from(base64Img,'utf8');
+                    s=dataBuffer.toString('base64')
+                    fs.writeFile('./public/images/1wsa23.png', dataBuffer, function(err,w,e,r,t) {
+                        if(err) {
+                            console.log(err)
+                        }else{
+                            console.log('保存成功')
+                        }
+                        resolve(body)
+                    });
                 }
             });
-            // console.log(decodeImg) // Show the HTML for the baidu homepage.
+        })
+    })
+}
+router.get('/qrcode', async (ctx, next) => {
+    await getQrcode().then(res=>{
+        ctx.body={
+            code:200,
+            message:'请求成功',
+            data:res
         }
-    });
-    await ctx.render('code', {
-        s:s,
-        title: '生成二维码',
     })
 })
 router.post('/jsList', async (ctx, next) => {
