@@ -1,6 +1,7 @@
 const router = require('koa-router')()
 var fs = require("fs")
 var path=require('path')
+var http = require('http');
 var formidable = require('formidable');  
 var node_xlsx = require("node-xlsx");
 var request = require("request");
@@ -29,18 +30,15 @@ router.get('/', async (ctx, next) => {
     })
 })
 router.get('/identity', async (ctx, next) => {
-    // let s
     await ctx.render('identity', {
         title: '准考证打印',
         list:stuList,
     })
 })
 router.get('/no', async (ctx, next) => {
-    let s
     await ctx.render('no', {
         title: '座位号打印',
         list:seatList,
-        s:s
     })
 })
 router.get('/jsSeatNo', async (ctx, next) => {
@@ -54,11 +52,12 @@ router.get('/code', async (ctx, next) => {
         title: '生成二维码',
     })
 })
-function getToken(){
+// 获取微信token
+async function getToken(){
     return new Promise(resolve=>{
         var grant_type='client_credential'
-        var appid='wx93d20a0261dce3d2'
-        var secret='5d80313927a26524883fce37a6d04fc5'
+        var appid='wx58ff7e0d21f82f7f'
+        var secret='5056265c5a81e2e645ab16b1fe11188d'
         var url=`https://api.weixin.qq.com/cgi-bin/token?grant_type=${grant_type}&appid=${appid}&secret=${secret}`
         request({
             url:`${url}`,
@@ -66,77 +65,99 @@ function getToken(){
             headers: {
                 "content-type": "application/json",
             },
-            // body: JSON.stringify({
-            //     grant_type:token,
-            //     path:"pages/index/main"
-            // })
         }, async function (error, response, body) {
             resolve(body)
         });
     })
 }
-function getQrcode(){
+var re=''
+// 批量生成小程序码token只获取一次，在生成的时间内，token不会过期（有效期目前为 2 个小时）
+async function getQrcode(channel,fileName){
+    if(!re){
+        re=await getToken()
+    }
     return new Promise(resolve=>{
-        getToken().then(re=>{
-            var tokenObj=JSON.parse(re)
-            var s
-            var url_1='https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode'
-            var url='https://api.weixin.qq.com/wxa/getwxacodeunlimit'
-            var token=tokenObj['access_token']
-            var scene=encodeURIComponent("from=prob")
-            var form={
-                // "access_token":token,
-                "page":"pages/index/main",
-                "scene":"from=prob"
-            }
-            console.log(JSON.stringify(form))
-            request({
-                url:`${url}?access_token=${token}`,
-                // url:`${url}?access_token=${token}&path=pages/index/main`,
-                method: "POST",
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "page":"pages/index/main",
-                    "scene":'asd',
-                    "encoding":"binary"
-                })
-            }, async function (error, response, body) {
-                debugger
-                if (!error && response.statusCode == 200) {
-                    var jsonS=Buffer.from(body)
-                    var base64Img = body.toString('base64'); // base64图片编码字符串
-                    var dataBuffer = Buffer.from(base64Img,'utf8');
-                    s=dataBuffer.toString('base64')
-                    fs.writeFile('./public/images/1wsa23.png', dataBuffer, function(err,w,e,r,t) {
-                        if(err) {
-                            console.log(err)
-                        }else{
-                            console.log('保存成功')
-                        }
-                        resolve(body)
-                    });
-                }
+        var tokenObj=JSON.parse(re)
+        var token=tokenObj['access_token']
+        var url=`https://api.weixin.qq.com/wxa/getwxacode?access_token=${token}`
+        var postData = {
+            path: `pages/homePage/main?channel=${channel}`,//二维码默认打开小程序页面
+            width: 500,
+        }
+        postData = JSON.stringify(postData);
+        new Promise(function (resolvew, reject) {	//由于request pipe是异步下载图片的，需要同步的话需添加一个promise
+            var stream = request({
+                method: 'POST', 
+                url,
+                body: postData
+            }).pipe(fs.createWriteStream(`./public/images/qrcode/${fileName}.png`));
+            stream.on('end', function(response,ee) {
+                console.log('文件写入成功');
+                console.log(response,ee);
             });
-        })
+            stream.on('finish', function () {
+                console.log('调用结束')
+                resolvew("OK123");
+                resolve()
+                // cb&&cb();
+            });
+        });
     })
 }
-router.get('/qrcode', async (ctx, next) => {
-    await getQrcode().then(res=>{
-        ctx.body={
-            code:200,
-            message:'请求成功',
-            data:res
-        }
+router.post('/qrcode', async (ctx, next) => {
+    var form = new formidable.IncomingForm();  
+    form.encoding = 'utf-8';  
+    form.uploadDir = path.join(__dirname,'../excel');  
+    form.keepExtensions = true;//保留后缀  
+    form.maxFieldsSize = 2*1024*1024;  
+    // var hasDir=fs.accessSync(path.join(__dirname,'../excel'));
+    var hasDir=true
+    try {
+        fs.accessSync(path.join(__dirname,'../excel'))
+        console.log('可以读写');
+    } catch (err) {
+        hasDir=false
+    }
+    await new Promise(resolve =>{
+        form.parse(ctx.req,function(err,fields,files){
+            var tempPath = form.openedFiles[0].path
+            if(err){
+                console.log('文件上传错误！');  
+                return ;  
+            }
+            // 上传时input的name属性
+            var filename = files.file.name;  
+            console.log(filename)
+            var nameArray = filename.split('.');  
+            var type = nameArray[nameArray.length-1];  
+            var name=nameArray[0]
+            var date = new Date();  
+            var time = '_' + date.getFullYear()+"_"+date.getMonth()+"_" +date.getDay()+"_" + date.getHours() +"_"+ date.getMinutes();  
+            var avatarName = name + time +  '.' + type;  
+            var newPath = form.uploadDir +"\\"+ avatarName ; 
+            var oldPath= files.file.path
+            console.log(newPath)
+            fs.renameSync(oldPath,newPath);
+            var obj = node_xlsx.parse(newPath);  
+            // 只解析以第一sheet的数据
+            var firstSheet=obj[0].data.slice(1);
+            var vals=[];
+            for(var s=0;s<firstSheet.length;s++){
+                getQrcode(firstSheet[s][2],firstSheet[s][1])
+            }
+            console.log(firstSheet)
+            asd=JSON.stringify(vals)
+            resolve()
+        })
     })
+    ctx.body = '操作成功'
 })
 router.post('/jsList', async (ctx, next) => {
     var form = new formidable.IncomingForm();  
     form.encoding = 'utf-8';  
     form.uploadDir = path.join(__dirname,'../excel');  
     form.keepExtensions = true;//保留后缀  
-    form.maxFieldsSize = 2*1024*1024;  
+    form.maxFieldsSize = 2*1024*1024;
     // var hasDir=fs.accessSync(path.join(__dirname,'../excel'));
     var hasDir=true
     try {
@@ -155,7 +176,7 @@ router.post('/jsList', async (ctx, next) => {
             var tempPath = form.openedFiles[0].path
             if(err){
                 console.log('文件上传错误！');  
-                return ;  
+                return;  
             }
             // 上传时input的name属性
             var filename = files.file.name;  

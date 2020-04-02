@@ -19,13 +19,37 @@
         <div>
             from：<input type="text">
         </div>
-        <div>
+        <input type="file" class='ipt' name='list'>读取excel文件
+        <!-- <div>
             <button id='qrcode'>
                 生成
             </button>
-        </div>
+        </div> -->
     </div>
     <script>
+        $('.ipt').change(function(file){
+            // $('.a').show()
+            // $('#result').val('')
+            const files = file.currentTarget.files[0]
+            var formData = new FormData()
+            formData.append('file', files)
+            $.ajax({
+                url:'http://localhost:3100/qrcode',
+                type:'post',
+                data:formData,
+                processData:false,
+                // beforeSend: function( xhr ) {  
+                //     xhr.setRequestHeader('X-Requested-With', {toString: function(){ return ''; }});  
+                // },  
+                contentType: false,  
+                success:function(res){
+                    // $('.a').hide()
+                    // $('#result').val(res)
+                    // $('.len').html(`<span style='color:#f00;font-size:20px'>${JSON.parse(res).length}</span>条数据`)
+                    console.log(`生成${res}`)
+                }
+            })
+        })
         $('#qrcode').click(()=>{
             $.ajax({
                 url:'qrcode',
